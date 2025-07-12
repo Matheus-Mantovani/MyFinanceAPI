@@ -7,7 +7,8 @@ public enum TransactionCategory {
 	SALARY("Salary"), 
 	SHOPPING("Shopping"), 
 	TAXES("Taxes"), 
-	EDUCATION("Education");
+	EDUCATION("Education"),
+	OTHER("Other");
 	
 	private String name;
 	
@@ -45,6 +46,9 @@ public enum TransactionCategory {
 			}
 			case "education": {
 				return EDUCATION;
+			}
+			case "other": {
+				return OTHER;
 			}
 			default:
 				throw new IllegalArgumentException("Unexpected value: " + category.toLowerCase());

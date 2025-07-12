@@ -8,27 +8,25 @@ import jakarta.servlet.http.HttpServletResponse;
 public class LoginCommand implements Command {
 
 	@Override
-	public String execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
-		String view = null;
+	public void execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		var email = request.getParameter("email");
 		var password = request.getParameter("password");
-		
-		try(var factory = new DAOFactory()) {
-			var userDao = factory.getUserDAO();			
+
+		try (var factory = new DAOFactory()) {
+			var userDao = factory.getUserDAO();
 			var user = userDao.findByEmail(email);
 			var authenticated = User.authenticate(user, email, password);
-			
-			if(authenticated) {
-				var session = request.getSession(false);
-				session.setAttribute("user", user);
-				view = "controller.do?action=transactions-page";
-			} else {
+
+			if (!authenticated) {
 				request.setAttribute("error", "Invalid login");
-				view = "controller.do?action=login-page";
+				request.getRequestDispatcher("login.jsp").forward(request, response);
+				return;
 			}
+
+			var session = request.getSession(true);
+			session.setAttribute("user", user);
+			response.sendRedirect("controller.do?action=transactions-page");
 		}
-		
-		return view;
 	}
 
 }

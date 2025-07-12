@@ -8,26 +8,35 @@ import jakarta.servlet.http.HttpServletResponse;
 public class RegisterCommand implements Command {
 
 	@Override
-	public String execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
-		String view = null;
+	public void execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		var name = request.getParameter("name");
 		var email = request.getParameter("email");
 		var password = request.getParameter("password");
-		
-		try(var factory = new DAOFactory()) {
+
+		try (var factory = new DAOFactory()) {
 			var userDao = factory.getUserDAO();
-			
-			if(userDao.findByEmail(email) != null) {
+
+			if (userDao.findByEmail(email) != null) {
 				request.setAttribute("error", "Email already in use.");
-				view = "controller.do?action=register-page";
-			} else {
-				var user = new User(name, email, password);
-				userDao.create(user);
-				view = "controller.do?action=transactions-page";
+				request.getRequestDispatcher("register.jsp").forward(request, response);
+				return;
 			}
+			
+			var user = new User(name, email, password);
+			
+			if(userDao.create(user)) {
+				factory.commit();
+				var session = request.getSession(true);
+				session.setAttribute("user", user);
+			} else {
+				factory.rollback();
+				request.setAttribute("error", "Failed to complete the registration. Please try again.");
+				request.getRequestDispatcher("register.jsp").forward(request, response);
+				return;
+			}
+			
+			response.sendRedirect("controller.do?action=transactions-page");
 		}
-		
-		return view;
 	}
 
 }

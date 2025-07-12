@@ -1,7 +1,7 @@
 package br.edu.ifsp.matheus.dao.transaction;
 
-import java.time.LocalDate;
 import java.util.List;
+import java.util.Map;
 
 import br.edu.ifsp.matheus.enums.TransactionCategory;
 import br.edu.ifsp.matheus.enums.TransactionType;
@@ -11,15 +11,19 @@ public interface TransactionDAO {
 	
 	boolean create(Transaction transaction);
 	
+	boolean delete(Transaction transaction);
+	
 	Transaction findById(Long id);
 	
-	List<Transaction> findByPayerId(Long payerId);
+	List<Transaction> findByPayerId(Long payerId, int year, int month, TransactionType type, TransactionCategory category, int pageNumber, int pageSize);
 	
-	List<Transaction> findByReceiverId(Long userId, Long receiverId);
+	int totalPages(Long payerId, int year, int month, TransactionType type, TransactionCategory category, int pageSize);
 	
-	List<Transaction> findByTimeFrame(Long userId, LocalDate startDate, LocalDate endDate);
+	double totalIncome(Long payerId);
+
+	double totalExpense(Long payerId);
 	
-	List<Transaction> findByType(Long userId, TransactionType type);
+	Map<String, Double> incomeByCategory(Long payerId);
 	
-	List<Transaction> findByCategory(Long userId, TransactionCategory category);
+	Map<String, Double> expensesByCategory(Long payerId);
 }

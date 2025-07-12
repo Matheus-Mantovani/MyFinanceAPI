@@ -6,8 +6,8 @@ import jakarta.servlet.http.HttpServletResponse;
 public class GetRegisterPageCommand implements Command {
 
 	@Override
-	public String execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
-		return "register.jsp";
+	public void execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		request.getRequestDispatcher("register.jsp").forward(request, response);
 	}
 
 }

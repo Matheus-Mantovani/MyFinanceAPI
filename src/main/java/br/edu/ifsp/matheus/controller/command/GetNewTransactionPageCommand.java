@@ -6,8 +6,8 @@ import jakarta.servlet.http.HttpServletResponse;
 public class GetNewTransactionPageCommand implements Command {
 
 	@Override
-	public String execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
-		return "new-transaction.jsp";
+	public void execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		request.getRequestDispatcher("new-transaction.jsp").forward(request, response);
 	}
 
 }

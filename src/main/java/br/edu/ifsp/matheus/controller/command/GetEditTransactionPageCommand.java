@@ -6,9 +6,8 @@ import jakarta.servlet.http.HttpServletResponse;
 public class GetEditTransactionPageCommand implements Command {
 
 	@Override
-	public String execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+	public void execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		request.getRequestDispatcher("edit-transaction.jsp").forward(request, response);
 	}
 
 }
