@@ -1,4 +1,4 @@
-package br.edu.ifsp.matheus.model.entity;
+package br.edu.ifsp.matheus.model;
 
 import java.time.LocalDateTime;
 import java.util.Objects;
@@ -8,7 +8,9 @@ import br.edu.ifsp.matheus.enums.TransactionType;
 
 public class Transaction {
 	private Long id;
-	private double value;
+	private Long payerId;
+	private Long receiverId;
+	private double price;
 	private String description;
 	private TransactionType type;
 	private TransactionCategory category;
@@ -19,32 +21,53 @@ public class Transaction {
 		super();
 	}
 	
-	public Transaction(double value, String description, TransactionType type, TransactionCategory category,
+	public Transaction(Long payerId, Long receiverId, double price, String description, TransactionType type, TransactionCategory category,
 			LocalDateTime dateTime) {
-		this(null, value, description, type, category, dateTime);
+		this(null, payerId, receiverId, price, description, type, category, dateTime);
 	}
 
-	public Transaction(Long id, double value, String description, TransactionType type, TransactionCategory category,
+	public Transaction(Long id, Long payerId, Long receiverId, double price, String description, TransactionType type, TransactionCategory category,
 			LocalDateTime dateTime) {
 		this.id = id;
-		this.value = value;
+		this.payerId = payerId;
+		this.receiverId = receiverId;
+		this.price = price;
 		this.description = description;
 		this.type = type;
 		this.category = category;
 		this.dateTime = dateTime;
 	}
 
-	
 	public Long getId() {
 		return id;
 	}
 
-	public double getValue() {
-		return value;
+	public void setId(Long id) {
+		this.id = id;
 	}
 
-	public void setValue(double value) {
-		this.value = value;
+	public Long getPayerId() {
+		return payerId;
+	}
+
+	public void setPayerId(Long payerId) {
+		this.payerId = payerId;
+	}
+
+	public Long getReceiverId() {
+		return receiverId;
+	}
+
+	public void setReceiverId(Long receiverId) {
+		this.receiverId = receiverId;
+	}
+
+	public double getPrice() {
+		return price;
+	}
+
+	public void setPrice(double price) {
+		this.price = price;
 	}
 
 	public String getDescription() {
@@ -81,7 +104,7 @@ public class Transaction {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(category, dateTime, description, id, type, value);
+		return Objects.hash(category, dateTime, description, id, payerId, price, receiverId, type);
 	}
 
 	@Override
@@ -94,8 +117,10 @@ public class Transaction {
 			return false;
 		Transaction other = (Transaction) obj;
 		return category == other.category && Objects.equals(dateTime, other.dateTime)
-				&& Objects.equals(description, other.description) && Objects.equals(id, other.id) && type == other.type
-				&& Double.doubleToLongBits(value) == Double.doubleToLongBits(other.value);
+				&& Objects.equals(description, other.description) && Objects.equals(id, other.id)
+				&& Objects.equals(payerId, other.payerId)
+				&& Double.doubleToLongBits(price) == Double.doubleToLongBits(other.price)
+				&& Objects.equals(receiverId, other.receiverId) && type == other.type;
 	}
 }
 
