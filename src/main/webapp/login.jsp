@@ -21,13 +21,13 @@
 			<div class="mb-3">
 				<label for="email" class="form-label">E-mail</label> <input
 					type="email" class="form-control" id="email" name="email"
-					value="a@gmail.com" placeholder="your@email.com" required autofocus>
+					placeholder="your@email.com" required autofocus>
 			</div>
 
 			<div class="mb-3">
 				<label for="password" class="form-label">Password</label> <input
 					type="password" class="form-control" id="password" name="password"
-					value="123" placeholder="Your password" required>
+					placeholder="Your password" required>
 			</div>
 
 			<button type="submit" class="btn btn-primary w-100">Login</button>
