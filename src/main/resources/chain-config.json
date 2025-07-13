@@ -11,6 +11,7 @@
 		"br.edu.ifsp.matheus.controller.handler.GetTransactionsSummaryPageHandler",
 		"br.edu.ifsp.matheus.controller.handler.GetRegisterPageHandler",
 		"br.edu.ifsp.matheus.controller.handler.GetRestrictedAccessPageHandler",
+		"br.edu.ifsp.matheus.controller.handler.PutEditTransactionHandler",
 		"br.edu.ifsp.matheus.controller.handler.DeleteTransactionHandler"
 	]
 }

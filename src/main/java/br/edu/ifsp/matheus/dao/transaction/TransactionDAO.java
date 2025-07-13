@@ -13,6 +13,8 @@ public interface TransactionDAO {
 	
 	boolean delete(Transaction transaction);
 	
+	public boolean update(Transaction transaction);
+	
 	Transaction findById(Long id);
 	
 	List<Transaction> findByPayerId(Long payerId, int year, int month, TransactionType type, TransactionCategory category, int pageNumber, int pageSize);

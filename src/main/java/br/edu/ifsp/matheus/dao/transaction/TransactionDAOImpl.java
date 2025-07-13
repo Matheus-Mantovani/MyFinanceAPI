@@ -58,6 +58,29 @@ public class TransactionDAOImpl implements TransactionDAO {
 		
 		return false;
 	}
+	
+	@Override
+	public boolean update(Transaction transaction) {
+	    String sql = "UPDATE transactions SET receiver_id = ?, price = ?, description = ?, type = ?, category = ?, transaction_datetime = ? WHERE id = ? AND payer_id = ?";
+
+	    try (var ps = conn.prepareStatement(sql)) {
+	        ps.setLong(1, transaction.getReceiverId());
+	        ps.setDouble(2, transaction.getPrice());
+	        ps.setString(3, transaction.getDescription());
+	        ps.setString(4, transaction.getType().getName());
+	        ps.setString(5, transaction.getCategory().getName());
+	        ps.setTimestamp(6, Timestamp.valueOf(transaction.getDateTime()));
+	        ps.setLong(7, transaction.getId());
+	        ps.setLong(8, transaction.getPayerId());
+
+	        return ps.executeUpdate() > 0;
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    }
+
+	    return false;
+	}
+
 
 	@Override
 	public Transaction findById(Long id) {
